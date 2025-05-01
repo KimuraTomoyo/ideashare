@@ -32,10 +32,10 @@ if ($useDatabase) {
     // 結果に応じてリダイレクト
     if ($user) {
         if ($user['authority'] === 'admin') {
-            header("Location: admin_home.html"); // 管理者ページへ
+            header("Location: ../admin_home.html"); // 管理者ページへ
             exit();
         } elseif ($user['authority'] === 'user') {
-            header("Location: user_home.html");  // ユーザーページへ
+            header("Location: ../user_home.html");  // ユーザーページへ
             exit();
         } else {
             echo "権限が不明です。";
@@ -51,10 +51,10 @@ if ($useDatabase) {
 
     // 固定ユーザー情報で判定（実際のサービスでは使わないでください）
     if ($username === 'admin' && $password === 'admin123') {
-        header("Location: admin_home.html"); // 管理者ページへ
+        header("Location: ../admin_home.html"); // 管理者ページへ
         exit();
     } elseif ($username === 'user' && $password === 'user123') {
-        header("Location: user_home.html");  // ユーザーページへ
+        header("Location: ../user_home.html");  // ユーザーページへ
         exit();
     } else {
         echo "ユーザー名またはパスワードが正しくありません。";
