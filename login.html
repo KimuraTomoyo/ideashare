@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>ログインページ</title>
-  <link rel="stylesheet" href="style/login.css">
+  <link rel="stylesheet" href="{{ url_for('style', filename='login.css') }}">
 </head>
 <body>
   <div class="main-container">
     <h2>Log In</h2>
     <div class="login-container">
-      <form action="php/login.php" method="POST">
+      <form action="/login" method="POST">
         <label for="username">ユーザー</label>
         <input type="text" id="username" name="username" placeholder="Enter ID" required>
         <label for="password">パスワード</label>
@@ -21,4 +21,6 @@
   </div>
 </body>
 </html>
+
+
 
