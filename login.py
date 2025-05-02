@@ -4,8 +4,8 @@ from idea_list import idea_list_bp  # Blueprintをインポート
 # Flaskアプリの初期化
 app = Flask(
     __name__,
-    static_folder="../style",      # CSSのフォルダ
-    template_folder="../"          # HTMLテンプレートのフォルダ
+    static_folder="./static",      # CSSのフォルダ
+    template_folder="./templates"          # HTMLテンプレートのフォルダ
 )
 app.secret_key = 'some_secret_key'  # セッション使用のためのキー
 
@@ -33,7 +33,7 @@ def index():
     return render_template('login.html')
 
 # CSSファイルの配信
-@app.route('/style/<path:filename>')
+@app.route('/static/<path:filename>')
 def style(filename):
     return app.send_static_file(filename)
 
