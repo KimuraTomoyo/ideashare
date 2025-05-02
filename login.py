@@ -30,6 +30,10 @@ def login():
         return redirect(url_for('idea_list_bp.idea_list'))  # /ideas/ にリダイレクト
     else:
         return "ログイン失敗：ユーザー名またはパスワードが正しくありません"
+# 管理者ログイン
+@app.route('/admin_login')
+def admin_login():
+    return render_template('admin_login.html')
 
 # アプリ起動
 if __name__ == '__main__':
