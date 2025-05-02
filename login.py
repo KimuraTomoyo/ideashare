@@ -5,8 +5,8 @@ import os
 # Flaskアプリの初期化
 app = Flask(
     __name__,
-    static_folder="../style",          # CSSのフォルダ
-    template_folder="../templates"     # HTMLテンプレートのフォルダ
+    static_folder="static",          # CSSのフォルダ
+    template_folder="templates"     # HTMLテンプレートのフォルダ
 )
 app.secret_key = 'some_secret_key'  # ※本番環境では環境変数で管理推奨
 
