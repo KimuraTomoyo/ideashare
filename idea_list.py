@@ -1,5 +1,11 @@
 from flask import Blueprint, render_template, request, session
-from model import get_ideas_from_db
+from model import (
+    get_ideas_from_db,
+    get_tags_from_db,
+    get_categories1_from_db,
+    get_categories2_from_db,
+    get_categories3_from_db
+)
 import math
 
 # Blueprintの作成（ルーティング管理用）
@@ -7,6 +13,7 @@ idea_list_bp = Blueprint('idea_list_bp', __name__)
 
 
 # アイデア一覧ページ
+"""
 @idea_list_bp.route('/')
 def idea_list():
     page = int(request.args.get('page', 1))
@@ -17,6 +24,28 @@ def idea_list():
     ideas = all_ideas[(page - 1) * per_page: page * per_page]
 
     return render_template('index.html', ideas=ideas, total_pages=total_pages)
+"""
+@idea_list_bp.route('/')
+def idea_list():
+    page = int(request.args.get('page', 1))
+    per_page = 10
+    all_ideas = get_ideas_from_db()
+    total = len(all_ideas)
+    total_pages = math.ceil(total / per_page)
+    ideas = all_ideas[(page - 1) * per_page: page * per_page]
+
+    tags = get_tags_from_db()
+    cat1 = get_categories1_from_db()
+    cat2 = get_categories2_from_db()
+    cat3 = get_categories3_from_db()
+
+    return render_template('index.html',
+                           ideas=ideas,
+                           total_pages=total_pages,
+                           tags=tags,
+                           cat1=cat1,
+                           cat2=cat2,
+                           cat3=cat3)
 
 # アイデア詳細ページ（省略可）
 @idea_list_bp.route('/idea/<int:idea_id>')

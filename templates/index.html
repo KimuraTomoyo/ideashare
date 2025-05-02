@@ -22,17 +22,29 @@
     <div class="dropdown-bar">
         <select id="tag">
             <option disabled selected>タグ</option>
+            {% for tag in tags %}
+                <option value="{{ tag }}">{{ tag }}</option>
+            {% endfor %}
         </select>
 
         <div class="right-dropdowns">
             <select id="cat1">
                 <option disabled selected>カテゴリー1</option>
+                {% for item in cat1 %}
+                    <option value="{{ item }}">{{ item }}</option>
+                {% endfor %}
             </select>
             <select id="cat2">
                 <option disabled selected>カテゴリー2</option>
+                {% for item in cat2 %}
+                    <option value="{{ item }}">{{ item }}</option>
+                {% endfor %}
             </select>
             <select id="cat3">
                 <option disabled selected>カテゴリー3</option>
+                {% for item in cat3 %}
+                    <option value="{{ item }}">{{ item }}</option>
+                {% endfor %}
             </select>
         </div>
     </div>
