@@ -1,0 +1,97 @@
+/* ヘッダーのスタイル */
+.header {
+    background-color: #BAC43E;
+    padding: 20px;
+    text-align: center;
+}
+
+.header h1 {
+    color: black;
+    margin: 0;
+}
+
+/* フィルターバーとドロップダウンバーのスタイル */
+.filter-bar, .dropdown-bar {
+    margin: 15px 30px;
+}
+
+.dropdown-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ▼ 右側のドロップダウンリストの余白を設定 */
+.right-dropdowns select {
+    margin-left: 10px;
+}
+
+/* ▼ 共通のセレクトボックススタイルの調整 */
+.dropdown-bar select {
+    font-size: 1.1em;              /* フォントサイズを少し大きく */
+    padding: 8px 12px;             /* 内側余白を増やす */
+    border-radius: 8px;            /* 角を丸くする */
+    border: 1px solid #ccc;        /* 枠線を灰色に */
+    background-color: #f2f2f2;     /* 背景を薄い灰色に */
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1); /* 軽い影を追加 */
+}
+
+/* アイデアテーブルのスタイル（現在は使用しない） */
+.idea-table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+.idea-table th, .idea-table td {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    text-align: center;
+}
+
+.idea-table a {
+    text-decoration: none;
+    color: blue;
+}
+
+/* ページネーション */
+.pagination {
+    text-align: center;
+    margin: 20px;
+}
+
+.pagination a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #333;
+}
+
+/* 投稿ボタンのスタイル */
+.share-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.share-button a {
+    background-color: #BAC43E;
+    color: black;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+/* ログアウトボタンのスタイル */
+.logout-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+}
+
+.logout-button button {
+    background-color: #ccc;    /* 灰色背景 */
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
