@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>アイデア閲覧ページ</title>
+    <link rel="stylesheet" href="{{ url_for('style', filename='idea_list.css') }}">
+    <style>
+        /* カード一覧のコンテナ */
+        .idea-list {
+            width: 90%;
+            margin: 20px auto;
+        }
+
+        /* ヘッダーラベル行 */
+        .idea-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-bottom: 2px solid #aaa;
+        }
+
+        /* 各アイデアカード */
+        .idea-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+            align-items: center;
+        }
+
+        .idea-item a {
+            color: blue;
+            text-decoration: none;
+        }
+
+        .like-button {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダー部分 -->
+    <div class="header">
+        <h1>Share Your Idea!</h1>
+    </div>
+
+    <!-- フィルターバー -->
+    <div class="filter-bar">
+        <label>
+            <input type="checkbox" id="sortLiked"> Sort by most liked
+        </label>
+    </div>
+
+    <!-- ドロップダウンバー -->
+    <div class="dropdown-bar">
+        <select id="tag">
+            <option disabled selected>タグ</option>
+        </select>
+
+        <div class="right-dropdowns">
+            <select id="cat1">
+                <option disabled selected>カテゴリー1</option>
+            </select>
+            <select id="cat2">
+                <option disabled selected>カテゴリー2</option>
+            </select>
+            <select id="cat3">
+                <option disabled selected>カテゴリー3</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- アイデアリスト -->
+    <div class="idea-list">
+        <div class="idea-header">
+            <div>名前</div>
+            <div>カテゴリー</div>
+            <div>タイトル</div>
+            <div>ステータス</div>
+            <div>いいね</div>
+        </div>
+
+        {% for idea in ideas %}
+        <div class="idea-item">
+            <div>{{ idea.name }}</div>
+            <div>{{ idea.category }}</div>
+            <div><a href="{{ url_for('idea_list_bp.view_idea', idea_id=idea.id) }}">{{ idea.title }}</a></div>
+            <div>{{ idea.status }}</div>
+            <div>{{ idea.likes }}<button class="like-button" data-id="{{ idea.id }}">👍</button></div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- ページネーション -->
+    <div class="pagination">
+        {% for page_num in range(1, total_pages + 1) %}
+            <a href="{{ url_for('idea_list_bp.idea_list', page=page_num) }}">{{ page_num }}</a>
+        {% endfor %}
+    </div>
+
+    <!-- 投稿ボタン -->
+    <div class="share-button">
+        <a href="{{ url_for('idea_list_bp.submit_idea') }}">投稿</a>
+    </div>
+    
+    <!-- ログアウトボタン -->
+    <div class="logout-button">
+        <button onclick="logout()">ログアウト</button>
+    </div>    
+
+    <script>
+        // 全ての「いいね」ボタンにイベントリスナーを追加
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.like-button').forEach(button => {
+                button.addEventListener('click', function () {
+                    const ideaId = this.getAttribute('data-id');
+                    likeIdea(ideaId);
+                });
+            });
+        });
+
+        // 「いいね」処理
+        function likeIdea(ideaId) {
+            fetch(`/like/${ideaId}`, { method: 'POST' })
+                .then(response => location.reload());
+        }
+        // ログアウト処理（後で実装）
+        function logout() {
+            // TODO: ログアウト処理をここに実装
+            console.log("ログアウト処理");
+        }        
+    </script>
+</body>
+</html>

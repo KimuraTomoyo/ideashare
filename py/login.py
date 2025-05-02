@@ -1,16 +1,21 @@
-from flask import Flask, request, render_template
-# import mysql.connector  # ⭐ 後でAzure接続を使うときに有効にしてください
+from flask import Flask, request, render_template, redirect, url_for, session
+from idea_list import idea_list_bp  # Blueprintをインポート
 
+# Flaskアプリの初期化
 app = Flask(
     __name__,
-    static_folder="../style",      # CSSファイルの場所
-    template_folder="../"          # HTMLファイルの場所
+    static_folder="../style",      # CSSのフォルダ
+    template_folder="../"          # HTMLテンプレートのフォルダ
 )
+app.secret_key = 'some_secret_key'  # セッション使用のためのキー
 
-# 🔁 モード切替：True = データベースモード（Azure）、False = テストユーザーモード
+# Blueprintを登録（/ideas 以下のルートを管理）
+app.register_blueprint(idea_list_bp, url_prefix='/ideas')
+
+# データベースモード切り替え
 USE_DATABASE = False
 
-# 🧪 テスト用ユーザー（DBを使わない時）
+# テスト用ユーザー情報
 TEST_USERS = {
     'admin': {
         'password': 'admin123',
@@ -22,57 +27,33 @@ TEST_USERS = {
     }
 }
 
+# ログインページ表示
 @app.route('/')
 def index():
     return render_template('login.html')
 
+# CSSファイルの配信
 @app.route('/style/<path:filename>')
 def style(filename):
     return app.send_static_file(filename)
 
+# ログイン処理
 @app.route('/login', methods=['POST'])
 def login():
     username = request.form['username']
     password = request.form['password']
 
     if USE_DATABASE:
-        # ⭐ まだMySQLを設定していない場合、この部分はコメントのままにしてください
-        """
-        try:
-            # ✅ ここをAzureのMySQL接続情報に変更してください
-            conn = mysql.connector.connect(
-                host='your-azure-mysql-host.mysql.database.azure.com',
-                user='yourusername@your-azure-mysql-host',
-                password='yourpassword',
-                database='yourdatabasename'
-            )
-            cursor = conn.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM account WHERE username = %s AND password = %s", (username, password))
-            user = cursor.fetchone()
-            conn.close()
-
-            if user:
-                if user['role'] == 'admin':
-                    return render_template('admin_home.html', username=username)
-                else:
-                    return render_template('user_home.html', username=username)
-            else:
-                return "ログイン失敗：ユーザー名またはパスワードが正しくありません"
-
-        except mysql.connector.Error as err:
-            return f"データベース接続エラー: {err}"
-        """
         return "⚠ データベースモードが有効ですが、接続設定がコメントアウトされています。"
     else:
-        # 🧪 テストモードでのユーザー認証
         user = TEST_USERS.get(username)
         if user and user['password'] == password:
-            if user['role'] == 'admin':
-                return render_template('admin_home.html', username=username)
-            else:
-                return render_template('user_home.html', username=username)
+            session['username'] = username  # セッションにユーザー名を保存
+            return redirect(url_for('idea_list_bp.idea_list'))  # /ideas/ にリダイレクト
         else:
             return "ログイン失敗：ユーザー名またはパスワードが正しくありません"
 
+# アプリ起動
 if __name__ == '__main__':
     app.run(debug=True)
+
