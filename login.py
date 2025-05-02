@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template, redirect, url_for, session
 from idea_list import idea_list_bp  # Blueprintをインポート
 from model import get_user_from_db  # ← model.pyからユーザー取得関数をインポート
+from admin_login import admin_bp
+
 
 # Flaskアプリの初期化
 app = Flask(
@@ -12,7 +14,8 @@ app.secret_key = 'some_secret_key'  # セッション使用のためのキー
 
 # Blueprintを登録（/ideas 以下のルートを管理）
 app.register_blueprint(idea_list_bp, url_prefix='/ideas')
-
+# Blueprintを登録 管理者ログイン
+app.register_blueprint(admin_bp)
 # ログインページ表示
 @app.route('/')
 def index():
@@ -30,7 +33,7 @@ def login():
         return redirect(url_for('idea_list_bp.idea_list'))  # /ideas/ にリダイレクト
     else:
         return "ログイン失敗：ユーザー名またはパスワードが正しくありません"
-# 管理者ログイン
+# 管理者ログインへ
 @app.route('/admin_login')
 def admin_login():
     return render_template('admin_login.html')

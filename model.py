@@ -12,7 +12,17 @@ def get_user_from_db(username):
         keys = ["username", "password", "role"]
         return dict(zip(keys, row))
     return None
-
+#管理者ログイン
+def get_admin_from_db(username):
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT username, password, role FROM users WHERE username=? AND role='admin'", (username,))
+    row = cursor.fetchone()
+    conn.close()
+    if row:
+        keys = ["username", "password", "role"]
+        return dict(zip(keys, row))
+    return None
 def get_ideas_from_db():
 # アイデアの取得
     conn = sqlite3.connect('ideas.db')
@@ -53,6 +63,14 @@ def get_user_from_db(username):
         }
     }
     return TEST_USERS.get(username)
+def get_admin_from_db(username):
+    TEST_ADMINS = {
+        'admin': {
+            'password': 'admin123',
+            'role': 'admin'
+        }
+    }
+    return TEST_ADMINS.get(username)
 def get_ideas_from_db():
     return [
         {"id": 1,"department": "技術部",  "name": "田中", "category": "Tech", "title": "AI活用法", "status": "公開中", "likes": 5},
