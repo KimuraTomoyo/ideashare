@@ -95,3 +95,35 @@
     border-radius: 5px;
     cursor: pointer;
 }
+/* カード一覧のコンテナ */
+.idea-list {
+    width: 90%;
+    margin: 20px auto;
+}
+
+/* ヘッダーラベル行 */
+.idea-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 2fr 1fr 1fr;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-bottom: 2px solid #aaa;
+}
+
+/* 各アイデアカード */
+.idea-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 2fr 1fr 1fr;
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+    align-items: center;
+}
+
+.idea-item a {
+    color: blue;
+    text-decoration: none;
+}
+
+.like-button {
+    margin-left: 5px;
+}
