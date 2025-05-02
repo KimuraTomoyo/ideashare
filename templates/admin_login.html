@@ -2,25 +2,22 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>ログインページ</title>
-  <link rel="stylesheet" href="{{ url_for('style', filename='login.css') }}">
+  <title>管理者ログインページ</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin_login.css') }}">
 </head>
 <body>
+    <a href="{{ url_for('index') }}" class="admin-login-button">通常ログインへ</a>
   <div class="main-container">
-    <h2>Log In</h2>
+    <h2>管理者Log In</h2>
     <div class="login-container">
-      <form action="/login" method="POST">
+      <form action="/admin_login" method="POST">
         <label for="username">ユーザー</label>
         <input type="text" id="username" name="username" placeholder="Enter ID" required>
         <label for="password">パスワード</label>
         <input type="password" id="password" name="password" placeholder="Password" required>
-
         <button type="submit">ログイン</button>
       </form>
     </div>
   </div>
 </body>
 </html>
-
-
-

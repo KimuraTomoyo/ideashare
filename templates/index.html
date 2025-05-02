@@ -3,41 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>アイデア閲覧ページ</title>
-    <link rel="stylesheet" href="{{ url_for('style', filename='idea_list.css') }}">
-    <style>
-        /* カード一覧のコンテナ */
-        .idea-list {
-            width: 90%;
-            margin: 20px auto;
-        }
-
-        /* ヘッダーラベル行 */
-        .idea-header {
-            display: grid;
-            grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
-            font-weight: bold;
-            padding: 10px 15px;
-            border-bottom: 2px solid #aaa;
-        }
-
-        /* 各アイデアカード */
-        .idea-item {
-            display: grid;
-            grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
-            padding: 10px 15px;
-            border-bottom: 1px solid #ddd;
-            align-items: center;
-        }
-
-        .idea-item a {
-            color: blue;
-            text-decoration: none;
-        }
-
-        .like-button {
-            margin-left: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='idea_list.css') }}">
 </head>
 <body>
     <!-- ヘッダー部分 -->
@@ -56,17 +22,29 @@
     <div class="dropdown-bar">
         <select id="tag">
             <option disabled selected>タグ</option>
+            {% for tag in tags %}
+                <option value="{{ tag }}">{{ tag }}</option>
+            {% endfor %}
         </select>
 
         <div class="right-dropdowns">
             <select id="cat1">
                 <option disabled selected>カテゴリー1</option>
+                {% for item in cat1 %}
+                    <option value="{{ item }}">{{ item }}</option>
+                {% endfor %}
             </select>
             <select id="cat2">
                 <option disabled selected>カテゴリー2</option>
+                {% for item in cat2 %}
+                    <option value="{{ item }}">{{ item }}</option>
+                {% endfor %}
             </select>
             <select id="cat3">
                 <option disabled selected>カテゴリー3</option>
+                {% for item in cat3 %}
+                    <option value="{{ item }}">{{ item }}</option>
+                {% endfor %}
             </select>
         </div>
     </div>
@@ -74,6 +52,7 @@
     <!-- アイデアリスト -->
     <div class="idea-list">
         <div class="idea-header">
+            <div>部門</div>
             <div>名前</div>
             <div>カテゴリー</div>
             <div>タイトル</div>
@@ -83,11 +62,13 @@
 
         {% for idea in ideas %}
         <div class="idea-item">
+            <div>{{ idea.department }}</div>
             <div>{{ idea.name }}</div>
             <div>{{ idea.category }}</div>
             <div><a href="{{ url_for('idea_list_bp.view_idea', idea_id=idea.id) }}">{{ idea.title }}</a></div>
             <div>{{ idea.status }}</div>
-            <div>{{ idea.likes }}<button class="like-button" data-id="{{ idea.id }}">👍</button></div>
+            <div>{{ idea.likes }} 👍</div>
+
         </div>
         {% endfor %}
     </div>
@@ -106,30 +87,9 @@
     
     <!-- ログアウトボタン -->
     <div class="logout-button">
+        <!-- ログアウト実装 -->
         <button onclick="logout()">ログアウト</button>
     </div>    
 
-    <script>
-        // 全ての「いいね」ボタンにイベントリスナーを追加
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.like-button').forEach(button => {
-                button.addEventListener('click', function () {
-                    const ideaId = this.getAttribute('data-id');
-                    likeIdea(ideaId);
-                });
-            });
-        });
-
-        // 「いいね」処理
-        function likeIdea(ideaId) {
-            fetch(`/like/${ideaId}`, { method: 'POST' })
-                .then(response => location.reload());
-        }
-        // ログアウト処理（後で実装）
-        function logout() {
-            // TODO: ログアウト処理をここに実装
-            console.log("ログアウト処理");
-        }        
-    </script>
 </body>
 </html>

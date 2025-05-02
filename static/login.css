@@ -55,3 +55,22 @@ body {
 .login-container button:hover {
   background-color: #0056b3;
 }
+/*管理者ログインButton*/
+.admin-login-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: transparent;
+  color: #BAC43E;
+  font-weight: bold;
+  text-decoration: none;
+  border: 2px solid #BAC43E;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.admin-login-button:hover {
+  background-color: #BAC43E;
+  color: white;
+}
